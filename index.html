@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+</head>
+<body>
+    <div id="ageCalculatorContainer"></div>
+
+    <script>
+        document.getElementById('ageCalculatorContainer').innerHTML = `
+        <div class="age-calculator">
+            <style>
+                .age-calculator {
+                    font-family: Arial, sans-serif;
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background: #fff;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                }
+                
+                .age-calculator h1 {
+                    color: #ad2a24;
+                    text-align: center;
+                    margin-bottom: 20px;
+                    font-size: 24px;
+                }
+                
+                .age-calculator .input-group {
+                    display: flex;
+                    gap: 10px;
+                    margin-bottom: 15px;
+                    flex-wrap: wrap;
+                }
+                
+                .age-calculator .input-field {
+                    flex: 1;
+                    min-width: 120px;
+                }
+                
+                .age-calculator label {
+                    display: block;
+                    margin-bottom: 5px;
+                    font-size: 14px;
+                    color: #555;
+                }
+                
+                .age-calculator select,
+                .age-calculator input {
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    box-sizing: border-box;
+                }
+                
+                .age-calculator select {
+                    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+                    background-repeat: no-repeat;
+                    background-position: right 10px center;
+                    background-size: 12px;
+                    appearance: none;
+                    padding-right: 30px;
+                }
+                
+                .age-calculator .button-group {
+                    display: flex;
+                    gap: 10px;
+                    margin-top: 20px;
+                }
+                
+                .age-calculator button {
+                    padding: 12px 20px;
+                    border: none;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    cursor: pointer;
+                    flex: 1;
+                }
+                
+                .age-calculator #calculateBtn {
+                    background-color: #ad2a24;
+                    color: white;
+                }
+                
+                .age-calculator #calculateBtn:hover {
+                    background-color: #8a221d;
+                }
+                
+                .age-calculator #clearBtn {
+                    background-color: #f0f0f0;
+                    color: #333;
+                }
+                
+                .age-calculator #clearBtn:hover {
+                    background-color: #e0e0e0;
+                }
+                
+                .age-calculator .error {
+                    color: #d32f2f;
+                    font-size: 13px;
+                    margin-top: 5px;
+                    display: none;
+                }
+                
+                .age-calculator .results {
+                    margin-top: 25px;
+                    padding: 20px;
+                    background-color: #f9f9f9;
+                    border-radius: 8px;
+                    display: none;
+                }
+                
+                .age-calculator .fun-facts {
+                    margin-top: 20px;
+                    padding: 20px;
+                    background-color: #f5f5f5;
+                    border-radius: 8px;
+                    display: none;
+                }
+                
+                .age-calculator .age-result {
+                    margin: 10px 0;
+                    font-size: 15px;
+                }
+                
+                .age-calculator .age-result strong {
+                    color: #ad2a24;
+                }
+                
+                @media (max-width: 480px) {
+                    .age-calculator .input-field {
+                        min-width: 100%;
+                    }
+                    
+                    .age-calculator .input-group {
+                        flex-direction: column;
+                        gap: 15px;
+                    }
+                    
+                    .age-calculator .button-group {
+                        flex-direction: column;
+                    }
+                    
+                    .age-calculator button {
+                        width: 100%;
+                    }
+                }
+            </style>
+
+            <h1>Age Calculator</h1>
+            
+            <div class="input-section">
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="birthMonth">Birth Month</label>
+                        <select id="birthMonth">
+                            <option value="">Select Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-field">
+                        <label for="birthDay">Birth Day</label>
+                        <input type="number" id="birthDay" placeholder="Day" min="1" max="31">
+                        <div id="birthDayError" class="error"></div>
+                    </div>
+                    
+                    <div class="input-field">
+                        <label for="birthYear">Birth Year</label>
+                        <input type="number" id="birthYear" placeholder="Year" min="1900" max="2100">
+                        <div id="birthYearError" class="error"></div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="ageAtMonth">Target Month</label>
+                        <select id="ageAtMonth">
+                            <option value="">Select Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-field">
+                        <label for="ageAtDay">Target Day</label>
+                        <input type="number" id="ageAtDay" placeholder="Day" min="1" max="31">
+                        <div id="ageAtDayError" class="error"></div>
+                    </div>
+                    
+                    <div class="input-field">
+                        <label for="ageAtYear">Target Year</label>
+                        <input type="number" id="ageAtYear" placeholder="Year" min="1900" max="2100">
+                        <div id="ageAtYearError" class="error"></div>
+                    </div>
+                </div>
+                
+                <div id="dateError" class="error"></div>
+                
+                <div class="button-group">
+                    <button id="calculateBtn">Calculate Age</button>
+                    <button id="clearBtn">Clear All</button>
+                </div>
+            </div>
+            
+            <div id="results" class="results">
+                <h2>Age Calculation Results</h2>
+                <div id="ageResults"></div>
+            </div>
+            
+            <div id="funFacts" class="fun-facts">
+                <h2>Interesting Facts</h2>
+                <div id="factsResults"></div>
+            </div>
+        </div>
+        `;
+
+        // Initialize the calculator
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default target date to today
+            const today = new Date();
+            document.getElementById('ageAtMonth').value = today.getMonth() + 1;
+            document.getElementById('ageAtDay').value = today.getDate();
+            document.getElementById('ageAtYear').value = today.getFullYear();
+            
+            // Add event listeners
+            document.getElementById('calculateBtn').addEventListener('click', calculateAge);
+            document.getElementById('clearBtn').addEventListener('click', clearForm);
+            
+            // Add input validation
+            document.getElementById('birthDay').addEventListener('input', validateDay);
+            document.getElementById('ageAtDay').addEventListener('input', validateDay);
+            document.getElementById('birthYear').addEventListener('input', validateYear);
+            document.getElementById('ageAtYear').addEventListener('input', validateYear);
+            
+            function validateDay(e) {
+                const dayInput = e.target;
+                const errorElement = document.getElementById(dayInput.id + 'Error');
+                
+                if (!dayInput.value) {
+                    errorElement.textContent = 'Please enter a day';
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+                
+                const day = parseInt(dayInput.value);
+                if (isNaN(day) || day < 1 || day > 31) {
+                    errorElement.textContent = 'Please enter a valid day (1-31)';
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+                
+                errorElement.style.display = 'none';
+                return true;
+            }
+            
+            function validateYear(e) {
+                const yearInput = e.target;
+                const errorElement = document.getElementById(yearInput.id + 'Error');
+                
+                if (!yearInput.value) {
+                    errorElement.textContent = 'Please enter a year';
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+                
+                const year = parseInt(yearInput.value);
+                if (isNaN(year) || year < 1900 || year > 2100) {
+                    errorElement.textContent = 'Please enter a year between 1900-2100';
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+                
+                errorElement.style.display = 'none';
+                return true;
+            }
+            
+            function clearForm() {
+                // Reset form values
+                document.getElementById('birthMonth').value = '';
+                document.getElementById('birthDay').value = '';
+                document.getElementById('birthYear').value = '';
+                
+                // Reset to today's date
+                const today = new Date();
+                document.getElementById('ageAtMonth').value = today.getMonth() + 1;
+                document.getElementById('ageAtDay').value = today.getDate();
+                document.getElementById('ageAtYear').value = today.getFullYear();
+                
+                // Hide errors
+                document.querySelectorAll('.error').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // Hide results
+                document.getElementById('results').style.display = 'none';
+                document.getElementById('funFacts').style.display = 'none';
+            }
+            
+            function calculateAge() {
+                // Hide all errors initially
+                document.querySelectorAll('.error').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // Validate inputs
+                let isValid = true;
+                
+                // Validate birth date
+                const birthMonth = document.getElementById('birthMonth').value;
+                if (!birthMonth) {
+                    document.getElementById('dateError').textContent = 'Please select birth month';
+                    document.getElementById('dateError').style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (!validateDay({target: document.getElementById('birthDay')})) {
+                    isValid = false;
+                }
+                
+                if (!validateYear({target: document.getElementById('birthYear')})) {
+                    isValid = false;
+                }
+                
+                // Validate target date
+                const ageAtMonth = document.getElementById('ageAtMonth').value;
+                if (!ageAtMonth) {
+                    document.getElementById('dateError').textContent = 'Please select target month';
+                    document.getElementById('dateError').style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (!validateDay({target: document.getElementById('ageAtDay')})) {
+                    isValid = false;
+                }
+                
+                if (!validateYear({target: document.getElementById('ageAtYear')})) {
+                    isValid = false;
+                }
+                
+                if (!isValid) return;
+                
+                // Create date objects
+                const birthDate = new Date(
+                    parseInt(document.getElementById('birthYear').value),
+                    parseInt(document.getElementById('birthMonth').value) - 1,
+                    parseInt(document.getElementById('birthDay').value)
+                );
+                
+                const ageAtDate = new Date(
+                    parseInt(document.getElementById('ageAtYear').value),
+                    parseInt(document.getElementById('ageAtMonth').value) - 1,
+                    parseInt(document.getElementById('ageAtDay').value)
+                );
+                
+                // Validate date objects
+                if (birthDate.getDate() !== parseInt(document.getElementById('birthDay').value) || 
+                    birthDate.getMonth() !== parseInt(document.getElementById('birthMonth').value) - 1 || 
+                    birthDate.getFullYear() !== parseInt(document.getElementById('birthYear').value)) {
+                    document.getElementById('dateError').textContent = 'Invalid birth date (check month/day combination)';
+                    document.getElementById('dateError').style.display = 'block';
+                    return;
+                }
+                
+                if (ageAtDate.getDate() !== parseInt(document.getElementById('ageAtDay').value) || 
+                    ageAtDate.getMonth() !== parseInt(document.getElementById('ageAtMonth').value) - 1 || 
+                    ageAtDate.getFullYear() !== parseInt(document.getElementById('ageAtYear').value)) {
+                    document.getElementById('dateError').textContent = 'Invalid target date (check month/day combination)';
+                    document.getElementById('dateError').style.display = 'block';
+                    return;
+                }
+                
+                // Check if birth date is after target date
+                if (birthDate > ageAtDate) {
+                    document.getElementById('dateError').textContent = 'Birth date cannot be after target date';
+                    document.getElementById('dateError').style.display = 'block';
+                    return;
+                }
+                
+                // Calculate age
+                const age = getAge(birthDate, ageAtDate);
+                
+                // Display results
+                showResults(age, birthDate, ageAtDate);
+            }
+            
+            function getAge(birthDate, ageAtDate) {
+                let years = ageAtDate.getFullYear() - birthDate.getFullYear();
+                let months = ageAtDate.getMonth() - birthDate.getMonth();
+                let days = ageAtDate.getDate() - birthDate.getDate();
+                
+                if (days < 0) {
+                    months--;
+                    const prevMonthLastDay = new Date(ageAtDate.getFullYear(), ageAtDate.getMonth(), 0).getDate();
+                    days += prevMonthLastDay;
+                }
+                
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+                
+                // Calculate totals
+                const diffTime = Math.abs(ageAtDate - birthDate);
+                const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                const totalHours = totalDays * 24;
+                const totalMinutes = totalHours * 60;
+                const totalSeconds = totalMinutes * 60;
+                const totalWeeks = Math.floor(totalDays / 7);
+                const remainingDays = totalDays % 7;
+                const totalMonths = years * 12 + months;
+                
+                return {
+                    years,
+                    months,
+                    days,
+                    totalDays,
+                    totalWeeks,
+                    remainingDays,
+                    totalMonths,
+                    totalHours,
+                    totalMinutes,
+                    totalSeconds
+                };
+            }
+            
+            function showResults(age, birthDate, ageAtDate) {
+                // Format dates
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const birthDateStr = birthDate.toLocaleDateString('en-US', options);
+                const ageAtDateStr = ageAtDate.toLocaleDateString('en-US', options);
+                
+                // Display age results
+                document.getElementById('ageResults').innerHTML = `
+                    <div class="age-result"><strong>${age.years} years ${age.months} months ${age.days} days</strong></div>
+                    <div class="age-result">${age.totalMonths} months ${age.days} days</div>
+                    <div class="age-result">${age.totalWeeks} weeks ${age.remainingDays} days</div>
+                    <div class="age-result">${age.totalDays.toLocaleString()} days</div>
+                    <div class="age-result">${age.totalHours.toLocaleString()} hours</div>
+                    <div class="age-result">${age.totalMinutes.toLocaleString()} minutes</div>
+                    <div class="age-result">${age.totalSeconds.toLocaleString()} seconds</div>
+                `;
+                
+                // Calculate fun facts
+                const nextBirthday = new Date(ageAtDate.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+                if (nextBirthday < ageAtDate) {
+                    nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
+                }
+                
+                const daysUntilNextBirthday = Math.ceil((nextBirthday - ageAtDate) / (1000 * 60 * 60 * 24));
+                
+                // Display fun facts
+                document.getElementById('factsResults').innerHTML = `
+                    <p><strong>Born on:</strong> ${birthDateStr}</p>
+                    <p><strong>Age at date:</strong> ${ageAtDateStr}</p>
+                    <p><strong>Age at last birthday:</strong> ${age.years} years</p>
+                    <p><strong>Age at next birthday:</strong> ${age.years + 1} years</p>
+                    <p><strong>Days until next birthday:</strong> ${daysUntilNextBirthday}</p>
+                    <p><strong>Zodiac sign:</strong> ${getZodiacSign(birthDate)}</p>
+                    <p><strong>Generation:</strong> ${getGeneration(birthDate.getFullYear())}</p>
+                `;
+                
+                // Show results sections
+                document.getElementById('results').style.display = 'block';
+                document.getElementById('funFacts').style.display = 'block';
+            }
+            
+            function getZodiacSign(date) {
+                const day = date.getDate();
+                const month = date.getMonth() + 1;
+                
+                if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return "Aquarius";
+                if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return "Pisces";
+                if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return "Aries";
+                if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return "Taurus";
+                if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return "Gemini";
+                if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return "Cancer";
+                if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return "Leo";
+                if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return "Virgo";
+                if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return "Libra";
+                if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return "Scorpio";
+                if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return "Sagittarius";
+                if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return "Capricorn";
+                
+                return "Unknown";
+            }
+            
+            function getGeneration(year) {
+                if (year >= 2013) return "Generation Alpha";
+                if (year >= 1997) return "Generation Z";
+                if (year >= 1981) return "Millennials";
+                if (year >= 1965) return "Generation X";
+                if (year >= 1946) return "Baby Boomers";
+                if (year >= 1928) return "Silent Generation";
+                return "Greatest Generation";
+            }
+        });
+    </script>
+</body>
+</html>
