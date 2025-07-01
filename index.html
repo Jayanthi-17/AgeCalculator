@@ -183,7 +183,7 @@
                     
                     <div class="input-field">
                         <label for="birthYear">Birth Year</label>
-                        <input type="number" id="birthYear" placeholder="Year" min="1900" max="2100">
+                        <input type="number" id="birthYear" placeholder="Year" min="1751" max="2100">
                         <div id="birthYearError" class="error"></div>
                     </div>
                 </div>
@@ -216,7 +216,7 @@
                     
                     <div class="input-field">
                         <label for="ageAtYear">Target Year</label>
-                        <input type="number" id="ageAtYear" placeholder="Year" min="1900" max="2100">
+                        <input type="number" id="ageAtYear" placeholder="Year" min="1751" max="2100">
                         <div id="ageAtYearError" class="error"></div>
                     </div>
                 </div>
@@ -291,8 +291,8 @@
                 }
                 
                 const year = parseInt(yearInput.value);
-                if (isNaN(year) || year < 1900 || year > 2100) {
-                    errorElement.textContent = 'Please enter a year between 1900-2100';
+                if (isNaN(year) || year < 1751 || year > 2100) {
+                    errorElement.textContent = 'Please enter a year between 1751-2100';
                     errorElement.style.display = 'block';
                     return false;
                 }
