@@ -53,6 +53,7 @@
                     color: #555;
                     width: 100%;
                     margin-bottom: 5px;
+                    font-weight: bold;
                 }
                 
                 .age-calculator select,
@@ -163,8 +164,9 @@
             
             <div class="input-section">
                 <div class="input-group">
+                    <div class="date-group-label">Birth Date:</div>
                     <div class="input-field">
-                        <label for="birthMonth">Birth Month</label>
+                        <label for="birthMonth">Month</label>
                         <select id="birthMonth">
                             <option value="">Select Month</option>
                             <option value="1">January</option>
@@ -183,13 +185,13 @@
                     </div>
                     
                     <div class="input-field">
-                        <label for="birthDay">Birth Day</label>
+                        <label for="birthDay">Day</label>
                         <input type="number" id="birthDay" placeholder="Day" min="1" max="31">
                         <div id="birthDayError" class="error"></div>
                     </div>
                     
                     <div class="input-field">
-                        <label for="birthYear">Birth Year</label>
+                        <label for="birthYear">Year</label>
                         <input type="number" id="birthYear" placeholder="Year" min="1751" max="2100">
                         <div id="birthYearError" class="error"></div>
                     </div>
@@ -249,6 +251,7 @@
         </div>
         `;
 
+        // [Rest of the JavaScript code remains exactly the same]
         // Initialize the calculator
         document.addEventListener('DOMContentLoaded', function() {
             // Set default target date to today
