@@ -48,6 +48,13 @@
                     color: #555;
                 }
                 
+                .age-calculator .date-group-label {
+                    font-size: 14px;
+                    color: #555;
+                    width: 100%;
+                    margin-bottom: 5px;
+                }
+                
                 .age-calculator select,
                 .age-calculator input {
                     width: 100%;
@@ -189,8 +196,9 @@
                 </div>
                 
                 <div class="input-group">
+                    <div class="date-group-label">Age at the Date of:</div>
                     <div class="input-field">
-                        <label for="ageAtMonth">Age at the Date of: Month</label>
+                        <label for="ageAtMonth">Month</label>
                         <select id="ageAtMonth">
                             <option value="">Select Month</option>
                             <option value="1">January</option>
@@ -209,13 +217,13 @@
                     </div>
                     
                     <div class="input-field">
-                        <label for="ageAtDay">Age at the Date of: Day</label>
+                        <label for="ageAtDay">Day</label>
                         <input type="number" id="ageAtDay" placeholder="Day" min="1" max="31">
                         <div id="ageAtDayError" class="error"></div>
                     </div>
                     
                     <div class="input-field">
-                        <label for="ageAtYear">Age at the Date of: Year</label>
+                        <label for="ageAtYear">Year</label>
                         <input type="number" id="ageAtYear" placeholder="Year" min="1751" max="2100">
                         <div id="ageAtYearError" class="error"></div>
                     </div>
