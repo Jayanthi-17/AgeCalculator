@@ -190,7 +190,7 @@
                 
                 <div class="input-group">
                     <div class="input-field">
-                        <label for="ageAtMonth">Target Month</label>
+                        <label for="ageAtMonth">Age at the Date of: Month</label>
                         <select id="ageAtMonth">
                             <option value="">Select Month</option>
                             <option value="1">January</option>
@@ -209,13 +209,13 @@
                     </div>
                     
                     <div class="input-field">
-                        <label for="ageAtDay">Target Day</label>
+                        <label for="ageAtDay">Age at the Date of: Day</label>
                         <input type="number" id="ageAtDay" placeholder="Day" min="1" max="31">
                         <div id="ageAtDayError" class="error"></div>
                     </div>
                     
                     <div class="input-field">
-                        <label for="ageAtYear">Target Year</label>
+                        <label for="ageAtYear">Age at the Date of: Year</label>
                         <input type="number" id="ageAtYear" placeholder="Year" min="1751" max="2100">
                         <div id="ageAtYearError" class="error"></div>
                     </div>
@@ -454,7 +454,6 @@
                 // Format dates
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 const birthDateStr = birthDate.toLocaleDateString('en-US', options);
-                const ageAtDateStr = ageAtDate.toLocaleDateString('en-US', options);
                 
                 // Display age results
                 document.getElementById('ageResults').innerHTML = `
@@ -478,7 +477,6 @@
                 // Display fun facts
                 document.getElementById('factsResults').innerHTML = `
                     <p><strong>Born on:</strong> ${birthDateStr}</p>
-                    <p><strong>Age at date:</strong> ${ageAtDateStr}</p>
                     <p><strong>Age at last birthday:</strong> ${age.years} years</p>
                     <p><strong>Age at next birthday:</strong> ${age.years + 1} years</p>
                     <p><strong>Days until next birthday:</strong> ${daysUntilNextBirthday}</p>
